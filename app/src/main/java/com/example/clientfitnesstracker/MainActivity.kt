@@ -6,11 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.example.clientfitnesstracker.ui.theme.ClientFitnessTrackerTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,30 +23,28 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ClientFitnessTrackerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            ClientFitnessApp()
         }
     }
 }
 
+@Preview
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
+fun ClientFitnessApp() {
     ClientFitnessTrackerTheme {
-        Greeting("Android")
+        val navController = rememberNavController()
+        val bottomNavItems = listOf(
+            BottomNavItem("clients", "Clients", Icons.Default.AccountBox),
+            BottomNavItem("calendar", "Calendar", Icons.Default.DateRange),
+            BottomNavItem("schedule", "Schedule", Icons.Default.Home),
+            BottomNavItem("settings", "Settings", Icons.Default.Settings)
+        )
+
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            bottomBar = { BottomNavBar(navController, bottomNavItems) }
+        ) { innerPadding ->
+            NavigationGraph(navController, modifier = Modifier.padding(innerPadding))
+        }
     }
 }
