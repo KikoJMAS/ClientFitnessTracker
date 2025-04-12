@@ -1,5 +1,4 @@
 package com.example.clientfitnesstracker
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,11 +27,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview
 @Composable
 fun ClientFitnessApp() {
     ClientFitnessTrackerTheme {
         val navController = rememberNavController()
+
+        // Bottom Navigation Bar Items
         val bottomNavItems = listOf(
             BottomNavItem("clients", "Clients", Icons.Default.AccountBox),
             BottomNavItem("calendar", "Calendar", Icons.Default.DateRange),
@@ -44,7 +44,14 @@ fun ClientFitnessApp() {
             modifier = Modifier.fillMaxSize(),
             bottomBar = { BottomNavBar(navController, bottomNavItems) }
         ) { innerPadding ->
+            // Plug your navigation graph here
             NavigationGraph(navController, modifier = Modifier.padding(innerPadding))
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewApp() {
+    ClientFitnessApp()
 }
