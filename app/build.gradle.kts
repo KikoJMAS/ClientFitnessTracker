@@ -1,8 +1,13 @@
+import org.jetbrains.kotlin.gradle.plugin.KaptExtension
+//import org.jetbrains.kotlin.kapt3.KaptOptions
+
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.kotlin.compose)
 }
+
 
 android {
     namespace = "com.example.clientfitnesstracker"
@@ -10,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.clientfitnesstracker"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -40,7 +45,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -50,6 +54,21 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+
+    // Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    "kapt"("androidx.room:room-compiler:2.6.1")
+
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
+    // Compose Foundation & Material
+    implementation("androidx.compose.foundation:foundation:1.4.3")
+    implementation("androidx.compose.material3:material3:1.1.1")
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
